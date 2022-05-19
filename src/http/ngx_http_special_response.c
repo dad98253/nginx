@@ -723,7 +723,12 @@ ngx_http_send_special_response(ngx_http_request_t *r,
     ngx_http_clear_last_modified(r);
     ngx_http_clear_etag(r);
 
-    rc = ngx_http_send_header(r);
+// jck    rc = ngx_http_send_header(r);
+    if ( err >= NGX_HTTP_OFF_4XX ) {
+	rc = NGX_ERROR;
+    } else {
+    	rc = ngx_http_send_header(r);
+    }
 
     if (rc == NGX_ERROR || r->header_only) {
         return rc;
